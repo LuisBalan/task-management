@@ -48,8 +48,17 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
+  // first delete approach
+
+  // @Delete('/:uuid')
+  // deleteById(@Param('uuid', new ParseUUIDPipe()) uuid: string): void {
+  //   this.tasksService.deleteById(uuid);
+  //   // console.log(this.task)
+  // }
+
+  // second delete
   @Delete('/:uuid')
-  deleteById(@Param('uuid', new ParseUUIDPipe()) uuid: string): Task[] {
-    return this.tasksService.deleteById(uuid);
+  removeById(@Param('uuid', new ParseUUIDPipe()) uuid: string): void {
+    this.tasksService.removeById(uuid);
   }
 }

@@ -8,6 +8,8 @@ export class TasksService {
   private tasks: Task[] = [];
 
   getAllTasks(): Task[] {
+    console.log('new array: ', this.tasks);
+    console.log(this.tasks.length);
     return this.tasks;
   }
 
@@ -21,19 +23,34 @@ export class TasksService {
     };
 
     this.tasks.push(task);
+    console.log('new array: ', this.tasks);
+    console.log('amount of items: ', this.tasks.length);
     return task;
   }
 
   getById(uuid: string): Task {
     const foundTask = this.tasks.filter((task: Task) => task.id === uuid);
+    console.log(foundTask[0]);
     return foundTask[0];
   }
 
+  // deleteById(id: string): void {
+  //   // const elementToDeleteId = (task: Task) => task.id === id;
+  //   const indexToDelete = this.tasks.findIndex((task: Task) => task.id === id);
+  //   try {
+  //     this.tasks = this.tasks.splice(indexToDelete, 1);
+  //     console.log('new array: ', this.tasks);
+  //     console.log(this.tasks.length);
+  //     // console.log('new array', newArray);
+  //     // return newArray;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  //repair
-  deleteById(id: string): Task[] {
-    const matchId = (task: Task) => task.id === id;
-    const idToDelete = this.tasks.findIndex(matchId);
-    return this.tasks.splice(idToDelete, 1);
+  removeById(id: string): void {
+    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
+    console.log('new array: ', this.tasks);
+    console.log('amount of tasks: ', this.tasks.length);
   }
 }
