@@ -6,9 +6,10 @@ import {
   Param,
   ParseUUIDPipe,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './task.model';
+import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller('tasks')
@@ -60,5 +61,11 @@ export class TasksController {
   @Delete('/:uuid')
   removeById(@Param('uuid', new ParseUUIDPipe()) uuid: string): void {
     this.tasksService.removeById(uuid);
+  }
+
+  // Update a task by Id
+  @Patch('/:id/status')
+  updateById(@Param('id') id: string, @Body('status') status: TaskStatus) {
+    return this.tasksService.updateById(id, status);
   }
 }

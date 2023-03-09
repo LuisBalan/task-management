@@ -53,4 +53,14 @@ export class TasksService {
     console.log('new array: ', this.tasks);
     console.log('amount of tasks: ', this.tasks.length);
   }
+
+  // update task
+
+  updateById(id: string, status: TaskStatus): Task {
+    const taskToUpdateId = this.tasks.findIndex((element) => element.id === id);
+    this.tasks[taskToUpdateId].status = status;
+    console.log('updated task: ', this.tasks[taskToUpdateId]);
+    console.log(this.tasks);
+    return this.tasks[taskToUpdateId];
+  }
 }
