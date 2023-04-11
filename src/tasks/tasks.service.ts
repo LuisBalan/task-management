@@ -94,7 +94,7 @@ export class TasksService {
     const taskToUpdateId = this.tasks.findIndex((element) => element.id === id);
     this.tasks[taskToUpdateId].status = status;
     console.log('updated task: ', this.tasks[taskToUpdateId]);
-    console.log(this.tasks);
+    console.log('all the tasks: ', this.tasks);
     return this.tasks[taskToUpdateId];
   }
 }
