@@ -69,9 +69,7 @@ export class TasksService {
     if (!foundTask[0]) {
       throw new NotFoundException(`Task with ID: '${uuid}' not found`)
     }
-    console.log(foundTask[0]);
-    
-    
+
     return foundTask[0];
   }
 
@@ -112,7 +110,9 @@ export class TasksService {
     // return this.tasks[taskToUpdateId];
 
     const taskToUpdate = this.getById(id);
+    // console.log('tasktoupdate: ', taskToUpdate)
     taskToUpdate.status = status;
+    console.log('as updated task looks like: ', taskToUpdate);
     return taskToUpdate
   }
 }
