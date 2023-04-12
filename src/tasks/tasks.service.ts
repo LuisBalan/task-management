@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -64,7 +64,14 @@ export class TasksService {
 
   getById(uuid: string): Task {
     const foundTask = this.tasks.filter((task: Task) => task.id === uuid);
+
+
+    if (!foundTask[0]) {
+      throw new NotFoundException(`Task with ID: '${uuid}' not found`)
+    }
     console.log(foundTask[0]);
+    
+    
     return foundTask[0];
   }
 
@@ -83,7 +90,9 @@ export class TasksService {
   // }
 
   removeById(id: string): void {
-    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
+    const taskFound = this.getById(id);
+    this.tasks = this.tasks.filter((task: Task) => task.id !== taskFound.id);
+    
     console.log('new array: ', this.tasks);
     console.log('amount of tasks: ', this.tasks.length);
   }
@@ -91,10 +100,19 @@ export class TasksService {
   // update task
 
   updateById(id: string, status: TaskStatus): Task {
-    const taskToUpdateId = this.tasks.findIndex((element) => element.id === id);
-    this.tasks[taskToUpdateId].status = status;
-    console.log('updated task: ', this.tasks[taskToUpdateId]);
-    console.log('all the tasks: ', this.tasks);
-    return this.tasks[taskToUpdateId];
+    //const taskToUpdateId = this.tasks.findIndex((element) => element.id === id);
+
+    // if(!taskToUpdateId) {
+    //   throw new NotFoundException(`There is not a task with ID '${id}' to update.`)
+    // }
+
+    // this.tasks[taskToUpdateId].status = status;
+    // console.log('updated task: ', this.tasks[taskToUpdateId]);
+    // console.log('all the tasks: ', this.tasks);
+    // return this.tasks[taskToUpdateId];
+
+    const taskToUpdate = this.getById(id);
+    taskToUpdate.status = status;
+    return taskToUpdate
   }
 }
